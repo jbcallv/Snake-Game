@@ -26,9 +26,9 @@ snake_posY = HEIGHT/2
 
 # game loop
 running = True
-while (running):
-    #gameSnake.setSnakeFirstPosition()
+delay = 0
 
+while (running):
     for event in pygame.event.get():
         if (event.type == pygame.QUIT):
             running = False
@@ -40,7 +40,11 @@ while (running):
             if (event.key == pygame.K_d):
                 gameSnake.keyRight()
 
-            if (event.key == pygame.K_w):
-                gameSnake.moveForward()
+    # auto snake movement
+    if (delay == 480):
+        gameSnake.moveForward()
+        delay = 0
 
+    print("delay: ", delay)
+    delay += 1
     pygame.display.update()

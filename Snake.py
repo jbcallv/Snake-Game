@@ -20,9 +20,11 @@ class Snake:
         self.snake_color = snake_color
         self.snake_size = 20
 
+        # maybe not needed
         self.snake_posX = width/2
         self.snake_posY = height/2
 
+        # holds the entire snake's body
         self.snakeBody = []
 
         # up, left, down, right
@@ -193,6 +195,9 @@ class Snake:
                 self.snakeBody[i] = head_pos
                 head_pos = prev_pos
         self.draw()
+
+    def checkForBorderCollision(self):
+        pass
 
     def draw(self):
         """ draws the snake on call """
