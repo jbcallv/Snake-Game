@@ -265,8 +265,16 @@ class Snake:
             x = random.randint(20, self.width-20)
             y = random.randint(20, self.height-20)
             self.food.spawnFood(x, y)
-            self.addSnakeBodyPart()
 
+            # confirms that spawned position does not already collide with snake body
+            food_pos = self.food.getFoodPos()
+            for bp in self.snakeBody:
+                if (pygame.Rect(food_pos[0], food_pos[1], self.snake_size, self.snake_size).colliderect(bp[0], bp[1], bp[2], bp[3])):
+                    x = random.randint(20, self.width-20)
+                    y = random.randint(20, self.height-20)
+                    self.food.spawnFood(x, y)
+
+            self.addSnakeBodyPart()
             self.food.draw()
 
         for body_part in self.snakeBody:
