@@ -45,6 +45,8 @@ while (running):
         gameSnake.moveForward()
         delay = 0
 
-    print("delay: ", delay)
+    if (gameSnake.checkForBorderCollision() == True):
+        running = False
+
     delay += 1
     pygame.display.update()

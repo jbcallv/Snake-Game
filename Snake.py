@@ -197,7 +197,12 @@ class Snake:
         self.draw()
 
     def checkForBorderCollision(self):
-        pass
+        for body_part in self.snakeBody:
+            if (body_part[0] <= 0 or body_part[0] >= self.width):
+                return True
+
+            elif (body_part[1] == 0 or body_part[1] == self.height):
+                return True
 
     def draw(self):
         """ draws the snake on call """
