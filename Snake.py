@@ -198,10 +198,12 @@ class Snake:
 
     def checkForBorderCollision(self):
         for body_part in self.snakeBody:
+            # if the x coordinate goes to the left or right of the screen
             if (body_part[0] <= 0 or body_part[0] >= self.width):
                 return True
 
-            elif (body_part[1] == 0 or body_part[1] == self.height):
+            # if the y coordinate goes to the top or bottom of the screen
+            elif (body_part[1] <= 0 or body_part[1] >= self.height):
                 return True
 
     def draw(self):
