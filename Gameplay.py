@@ -44,6 +44,9 @@ while (running):
             if (event.key == pygame.K_d):
                 gameSnake.keyRight()
 
+            if (event.key == pygame.K_ESCAPE):
+                running = False
+
     # auto snake movement
     if (delay == 480):
         gameSnake.moveForward()

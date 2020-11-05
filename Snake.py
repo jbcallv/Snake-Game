@@ -33,7 +33,7 @@ class Snake:
 
         # up, left, down, right
         self.directions = [0, 1, 2, 3]
-        self.cur_direction = self.directions[1]
+        self.cur_direction = self.directions[random.randint(0, 3)]
 
         # keeping track of the score
         self.score = 0
@@ -52,7 +52,7 @@ class Snake:
         """sets the snake's initial position to the center of screen"""
         # append the head of the snake
         self.snakeBody.append(
-            [self.width/2, self.height/2, self.snake_size, self.snake_size])
+            [random.randint(90, self.width-90), random.randint(90, self.height-90), self.snake_size, self.snake_size])
         self.addSnakeBodyPart()
         self.addSnakeBodyPart()
         self.addSnakeBodyPart()
