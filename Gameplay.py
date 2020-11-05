@@ -48,5 +48,8 @@ while (running):
     if (gameSnake.checkForBorderCollision() == True):
         running = False
 
+    if (gameSnake.checkSnakeCollidesOneself() == True):
+        running = False
+
     delay += 1
     pygame.display.update()

@@ -1,6 +1,10 @@
 # necessary libraries
 import pygame
 import copy
+import random
+
+# importing food class
+from Food import Food
 
 
 class Snake:
@@ -31,6 +35,13 @@ class Snake:
         self.directions = [0, 1, 2, 3]
         self.cur_direction = self.directions[1]
 
+        # keeping track of the score
+        self.score = 0
+
+        # for drawing food
+        self.food_color = (177, 18, 38)
+        self.food = Food(window, self.food_color, 20, width, height)
+
         # snake head
         self.setSnakeFirstPosition()
 
@@ -58,7 +69,17 @@ class Snake:
 
     def addSnakeBodyPart(self):
         """ adds a body part to the snake """
-        self.snakeBody.append([self.snakeBody[len(self.snakeBody)-1][0]-20,
+        if (self.cur_direction == 0):
+            self.snakeBody.append([self.snakeBody[len(self.snakeBody)-1][0], 
+                              self.snakeBody[len(self.snakeBody)-1][1]+20, self.snake_size, self.snake_size])
+        elif (self.cur_direction == 1):
+            self.snakeBody.append([self.snakeBody[len(self.snakeBody)-1][0]+20, 
+                              self.snakeBody[len(self.snakeBody)-1][1], self.snake_size, self.snake_size])
+        elif (self.cur_direction == 2):
+            self.snakeBody.append([self.snakeBody[len(self.snakeBody)-1][0], 
+                              self.snakeBody[len(self.snakeBody)-1][1]-20, self.snake_size, self.snake_size])
+        elif (self.cur_direction == 3):
+            self.snakeBody.append([self.snakeBody[len(self.snakeBody)-1][0]-20, 
                               self.snakeBody[len(self.snakeBody)-1][1], self.snake_size, self.snake_size])
 
     def keyLeft(self):
@@ -197,6 +218,7 @@ class Snake:
         self.draw()
 
     def checkForBorderCollision(self):
+        """ checks if snake collides with borders of game window """
         for body_part in self.snakeBody:
             # if the x coordinate goes to the left or right of the screen
             if (body_part[0] <= 0 or body_part[0] >= self.width):
@@ -206,8 +228,46 @@ class Snake:
             elif (body_part[1] <= 0 or body_part[1] >= self.height):
                 return True
 
+    def checkForFoodCollision(self):
+        """ checks if snake is eating food """
+        # get snake head position
+        x = self.snakeBody[0][0]
+        y = self.snakeBody[0][1]
+        size1 = self.snakeBody[0][2]
+        size2 = self.snakeBody[0][3]
+
+        # get food position and then check if they intersect
+        food_pos = self.food.getFoodPos()
+        if (pygame.Rect(x, y, size1, size2).colliderect(pygame.Rect(food_pos[0], food_pos[1], size1, size2))):
+            return True
+        else:
+            return False
+
+    def checkSnakeCollidesOneself(self):
+        """ checks if snake hits one of its own body parts """
+        snake_h = self.snakeBody[0]
+        snake_head = pygame.Rect(snake_h[0], snake_h[1], snake_h[2], snake_h[3])
+
+        for i in range(1, len(self.snakeBody)):#body_part in self.snakeBody:
+            if (snake_head.colliderect(pygame.Rect(self.snakeBody[i][0], self.snakeBody[i][1], self.snakeBody[i][2], self.snakeBody[i][3]))):
+                return True
+        return False
+
     def draw(self):
         """ draws the snake on call """
         self.window.fill((0, 0, 0))
+        self.food.draw() 
+
+        # if the snake eats food
+        if (self.checkForFoodCollision()):
+            self.score += 5
+            # generate new food piece and draw
+            x = random.randint(20, self.width-20)
+            y = random.randint(20, self.height-20)
+            self.food.spawnFood(x, y)
+            self.addSnakeBodyPart()
+
+            self.food.draw()
+
         for body_part in self.snakeBody:
             pygame.draw.rect(self.window, self.snake_color, pygame.Rect(body_part[0], body_part[1], body_part[2], body_part[3]))
