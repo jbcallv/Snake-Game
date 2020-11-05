@@ -2,8 +2,9 @@
 import pygame
 from Snake import Snake
 
-# initialize pygame
+# initialize pygame and font
 pygame.init()
+pygame.font.init()
 
 # default screen size
 WIDTH = 700
@@ -23,6 +24,9 @@ pygame.display.flip()
 gameSnake = Snake(screen, WIDTH, HEIGHT, (0, 143, 17))
 snake_posX = WIDTH/2
 snake_posY = HEIGHT/2
+
+# for the score text
+score_font = pygame.font.SysFont('freesansbold.ttf', 30)
 
 # game loop
 running = True
@@ -50,6 +54,9 @@ while (running):
 
     if (gameSnake.checkSnakeCollidesOneself() == True):
         running = False
+
+    text_surface = score_font.render("Score: " + str(gameSnake.getScore()), 1,  (255, 255, 255), (0, 0, 0))
+    screen.blit(text_surface, (0, 0))
 
     delay += 1
     pygame.display.update()

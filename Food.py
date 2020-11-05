@@ -15,6 +15,7 @@ class Food:
 
     def spawnFood(self, x, y):
         """ spawns food on call
+
         :param x: is the x coordinate on which to spawn food
         :param y: is the y coordinate on which to spawn food
         """
@@ -27,6 +28,7 @@ class Food:
 
     def getFoodPos(self):
         """ checks the generated food position. Used only in Snake class
+
         :rtype list
         :return the x and y coordinates of the food piece on screen
         """

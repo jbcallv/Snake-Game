@@ -253,6 +253,10 @@ class Snake:
                 return True
         return False
 
+    def getScore(self):
+        """ for use in gameplay file to set the score text """
+        return self.score
+
     def draw(self):
         """ draws the snake on call """
         self.window.fill((0, 0, 0))
